@@ -1,0 +1,192 @@
+{
+    "movies": [
+        {
+            "id": 104,
+            "title": "Despicable Me 4",
+            "genre": "Animation, Adventure, Comedy",
+            "releaseDate": "2025-07-03",
+            "language": "English",
+            "duration": "1h 35m",
+            "director": "Chris Renaud",
+            "stars": "Steve Carell, Kristen Wiig, Will Ferrell, Sofia Vergara",
+            "plot": "Gru, Lucy, and their girls welcome a new family member while facing off against a charming but villainous Maxime Le Mal and his femme fatale girlfriend Valentina.",
+            "image": "../../src/assets/img/1.jpg",
+            "currency": "INR",
+            "prices": {
+                "normal": 180,
+                "premium": 300,
+                "sofa": 550
+            },
+            "showtimes": [
+                "12:00",
+                "15:30",
+                "18:45",
+                "21:00"
+            ],
+            "theaters": [
+                "PVR Cinemas",
+                "INOX",
+                "Cinepolis"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Avengers: Endgame",
+            "image": "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+            "genre": "Action, Sci-Fi",
+            "language": "English",
+            "duration": "3h 2m",
+            "releaseDate": "2019-04-26",
+            "director": "Anthony and Joe Russo",
+            "stars": "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth",
+            "plot": "The Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.",
+            "currency": "THB",
+            "prices": {
+                "normal": 250,
+                "superior": 350,
+                "sofa": 700
+            },
+            "showtimes": [
+                "10:00",
+                "14:30",
+                "19:00",
+                "22:30"
+            ],
+            "theaters": [
+                "PVR Icon",
+                "Carnival Cinemas"
+            ]
+        },
+        {
+            "id": 3,
+            "title": "The Dark Knight",
+            "image": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+            "genre": "Action, Crime, Drama",
+            "language": "English",
+            "duration": "2h 32m",
+            "releaseDate": "2008-07-18",
+            "director": "Christopher Nolan",
+            "stars": "Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine",
+            "plot": "Batman must accept one of the greatest psychological and physical tests when the Joker causes chaos in Gotham.",
+            "currency": "THB",
+            "prices": {
+                "normal": 180,
+                "superior": 280,
+                "sofa": 500
+            },
+            "showtimes": [
+                "11:00",
+                "16:00",
+                "20:30"
+            ],
+            "theaters": [
+                "PVR",
+                "IMAX"
+            ]
+        },
+        {
+            "id": 4,
+            "title": "Interstellar",
+            "image": "https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg",
+            "genre": "Adventure, Drama, Sci-Fi",
+            "language": "English",
+            "duration": "2h 49m",
+            "releaseDate": "2014-11-07",
+            "director": "Christopher Nolan",
+            "stars": "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caine",
+            "plot": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+            "currency": "THB",
+            "prices": {
+                "normal": 220,
+                "superior": 330,
+                "sofa": 650
+            },
+            "showtimes": [
+                "13:00",
+                "17:30",
+                "21:15"
+            ],
+            "theaters": [
+                "INOX",
+                "Cinepolis"
+            ]
+        }
+    ],
+    "transactions": [
+        {
+            "movieId": 4,
+            "price": 200,
+            "currency": "THB",
+            "userId": "he6fe54u4s56o71d36z51no",
+            "id": 1
+        },
+        {
+            "movieId": 2,
+            "price": 300,
+            "currency": "THB",
+            "userId": "he6fe54u4s56o71d36z51no",
+            "id": 2
+        },
+        {
+            "movieId": 5,
+            "price": 300,
+            "currency": "THB",
+            "userId": "he6fe54u4s56o71d36z51no",
+            "id": 3
+        }
+    ],
+    "events": [
+        {
+            "id": 1,
+            "title": "React Native Workshop",
+            "description": "A hands-on workshop to learn the basics of React Native.",
+            "date": "2025-08-10",
+            "time": "10:00 AM",
+            "location": "Tech Park, Bengaluru",
+            "category": "Workshop",
+            "image": "../../src/assets/img/react-native.jpg",
+            "organizer": "CodeCamp",
+            "price": 499,
+            "currency": "INR"
+        },
+        {
+            "id": 2,
+            "title": "Open Mic Night",
+            "description": "Join us for a night of music, comedy, and poetry.",
+            "date": "2025-08-15",
+            "time": "7:00 PM",
+            "location": "Café Mocha, Mumbai",
+            "category": "Entertainment",
+            "image": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f",
+            "organizer": "The Stage Co.",
+            "price": 199,
+            "currency": "INR"
+        },
+        {
+            "id": 3,
+            "title": "Startup Meetup",
+            "description": "Network with founders, investors, and mentors from the tech scene.",
+            "date": "2025-08-20",
+            "time": "4:00 PM",
+            "location": "T-Hub, Hyderabad",
+            "category": "Networking",
+            "image": "../../src/assets/img/startup-meet.jpg",
+            "organizer": "Startup India",
+            "price": 0,
+            "currency": "INR"
+        },
+        {
+            "id": 4,
+            "title": "Online Yoga Session",
+            "description": "Relax and unwind with a certified yoga instructor.",
+            "date": "2025-08-05",
+            "time": "6:30 AM",
+            "location": "Zoom",
+            "category": "Health & Wellness",
+            "image": "../../src/assets/img/yoga.jpg",
+            "organizer": "Wellness Club",
+            "price": 99,
+            "currency": "INR"
+        }
+    ]
+}
