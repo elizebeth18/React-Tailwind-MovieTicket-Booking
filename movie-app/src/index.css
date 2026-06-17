@@ -1,1 +1,10 @@
+/* 1. External third-party stylesheets MUST be imported at the very top */
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+/* 2. Tailwind v4 core engine initialization */
 @import "tailwindcss";
+
+/* Explicitly tell Tailwind v4 to scan your slider directory */
+@source "../node_modules/slick-carousel";
+@source "../node_modules/react-slick";

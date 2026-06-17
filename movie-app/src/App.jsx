@@ -4,7 +4,7 @@ import TabsBar from "./components/TabsBar";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from './store/movieSlice';
-import MovieSlider from "./components/MoviesSlider.jsx";
+import MovieSlider from "./components/MoviesSlider";
 
 
 const App = () => {
