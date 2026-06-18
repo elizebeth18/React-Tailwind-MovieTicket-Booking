@@ -1,19 +1,20 @@
 const Card = ({ movies }) => {
 
     return (
-     
-      <div className="flex flex-row  gap-16 w-350 max-w-full rounded-2xl mx-auto py-10 px-4">
+            
+      <div className="flex flex-row  gap-16 w-350
+            max-w-full rounded-2xl mx-auto py-10 px-4">
         {movies && movies.map((movie, index) => {
           return (
             <div key={index} className="flex-1 max-w-sm rounded-lg overflow-hidden shadow-lg bg-white">
                 <img
                   className="w-full h-48  object-cover"
-                  src={movie.image}
-                  alt="Card Image"
+                  src={movie?.image}
+                  alt={movie?.title}
                 />
 
                 <div className="p-6">
-                  <h2 className="text-xl text-center font-bold mb-2">{movie.title}</h2>
+                  <h2 className="text-xl text-center font-bold mb-2">{movie?.title}</h2>
 
                   <div className="flex justify-center">
                     <button
