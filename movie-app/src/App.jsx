@@ -5,6 +5,7 @@ import TabsBar from "./components/TabsBar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from './store/movieSlice';
 import MovieSlider from "./components/MoviesSlider";
+import RecommendedMovies from "./components/RecommendedMovies";
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
       <NavBar />
       <TabsBar />
       <MovieSlider movies={redux_moviesList}/>
+      <RecommendedMovies movies={redux_moviesList} />
     </>
   )
 }
