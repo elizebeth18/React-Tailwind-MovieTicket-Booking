@@ -5,7 +5,7 @@ const Card = ({ movies }) => {
       <div className="flex flex-row  gap-16 w-350 max-w-full rounded-2xl mx-auto py-10 px-4">
         {movies && movies.map((movie, index) => {
           return (
-            <div key={index} className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white">
+            <div key={index} className="flex-1 max-w-sm rounded-lg overflow-hidden shadow-lg bg-white">
                 <img
                   className="w-full h-48  object-cover"
                   src={movie.image}
