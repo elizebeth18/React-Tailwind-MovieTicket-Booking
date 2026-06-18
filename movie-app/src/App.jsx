@@ -9,21 +9,19 @@ import MovieSlider from "./components/MoviesSlider";
 
 const App = () => {
 
-  const redux_moviesList = useSelector((state) => state.movies.moviesList);
+  const redux_moviesList = useSelector((state) => state.movies?.moviesList);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchMovies());
   },[dispatch]);
 
-  console.log('redux_moviesList',redux_moviesList);
-
 
   return (
     <>
       <NavBar />
       <TabsBar />
-      <MovieSlider />
+      <MovieSlider movies={redux_moviesList}/>
     </>
   )
 }
