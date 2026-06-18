@@ -10,7 +10,10 @@ import RecommendedMovies from "./components/RecommendedMovies";
 
 const App = () => {
 
-  const redux_moviesList = useSelector((state) => state.movies?.moviesList);
+  const redux_moviesList = useSelector((state) => state.movies?.filteredMoviesList.length > 0 ? state.movies?.filteredMoviesList : state.movies?.moviesList);
+
+  const sliderMoviesList = useSelector((state) => state.movies?.moviesList);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,7 +25,7 @@ const App = () => {
     <>
       <NavBar />
       <TabsBar />
-      <MovieSlider movies={redux_moviesList}/>
+      <MovieSlider movies={sliderMoviesList} />
       <RecommendedMovies movies={redux_moviesList} />
     </>
   )
