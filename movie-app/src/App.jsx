@@ -1,34 +1,22 @@
-import { useEffect } from "react";
-import NavBar from "./components/NavBar";
-import TabsBar from "./components/TabsBar";
-
-import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies } from './store/movieSlice';
-import MovieSlider from "./components/MoviesSlider";
-import RecommendedMovies from "./components/RecommendedMovies";
-
+import { createBrowserRouter, RouteProvider } from 'react-router-dom';
+import Home from './components/Home';
+import Error from './components/Error';
 
 const App = () => {
 
-  const redux_moviesList = useSelector((state) => state.movies?.filteredMoviesList.length > 0 ? state.movies?.filteredMoviesList : state.movies?.moviesList);
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Home />,
+      errorElement: <Error />
+    }
+  ])
 
-  const sliderMoviesList = useSelector((state) => state.movies?.moviesList);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchMovies());
-  },[dispatch]);
-
-
-  return (
-    <>
-      <NavBar />
-      <TabsBar />
-      <MovieSlider movies={sliderMoviesList} />
-      <RecommendedMovies movies={redux_moviesList} />
-    </>
+  return(
+    <RouteProvider router={router}/>
   )
+
+
 }
 
 export default App
