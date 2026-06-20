@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import NavBar from "./components/NavBar";
-import TabsBar from "./components/TabsBar";
-
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies } from './store/movieSlice';
-import MovieSlider from "./components/MoviesSlider";
-import RecommendedMovies from "./components/RecommendedMovies";
+import { fetchMovies } from "../../store/movieSlice"
+
+import NavBar from "../NavBar";
+import TabsBar from "../TabsBar";
+import MovieSlider from "../MoviesSlider";
+import RecommendedMovies from "../RecommendedMovies";
 
 
 const Home = () => {
@@ -23,7 +23,6 @@ const Home = () => {
 
   return (
     <>
-      <NavBar />
       <TabsBar />
       <MovieSlider movies={sliderMoviesList} />
       <RecommendedMovies movies={redux_moviesList} />
