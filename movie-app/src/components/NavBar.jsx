@@ -1,11 +1,10 @@
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { searchMovies } from '../store/movieSlice'
 
 const NavBar = () => {
     
     const dispatch = useDispatch();
-
-        
 
     const searchTextHandler = (event) => {
         let searchText = event.target.value.toLowerCase().trim();
