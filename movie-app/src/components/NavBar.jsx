@@ -1,15 +1,22 @@
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { searchMovies } from '../store/movieSlice'
+import { searchMovies } from '../store/movieSlice';
+import { searchLatestMovies } from '../store/latestMoviesSlice';
 
 const NavBar = () => {
     
+    const location = useLocation();
+
     const dispatch = useDispatch();
 
     const searchTextHandler = (event) => {
         let searchText = event.target.value.toLowerCase().trim();
         
-        dispatch(searchMovies(searchText));
+        if(location.pathname === '/latestMovies'){
+            dispatch(searchLatestMovies(searchText));
+        }else {
+            dispatch(searchMovies(searchText));
+        }
     }
 
     return (

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from "../../store/movieSlice"
 
-import NavBar from "../NavBar";
 import TabsBar from "../TabsBar";
 import MovieSlider from "../MoviesSlider";
 import RecommendedMovies from "../RecommendedMovies";

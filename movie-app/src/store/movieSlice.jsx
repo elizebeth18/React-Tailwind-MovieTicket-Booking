@@ -22,7 +22,7 @@ const moviesSlice = createSlice({
     initialState,
     reducers: {
         searchMovies: (state, action) => {
-            state.filteredMoviesList = state.moviesList.filter((movie) => movie.title.toLowerCase().includes(action.payload));
+            state.filteredMoviesList = state.moviesList.filter((movie) => movie.title.trim().toLowerCase().includes(action.payload.trim()));
         }
     },
     extraReducers: (builder) => {
