@@ -1,13 +1,24 @@
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { searchMovies } from '../store/movieSlice';
 import { searchLatestMovies } from '../store/latestMoviesSlice';
 
 const NavBar = () => {
-    
-    const location = useLocation();
 
+    const [toggleSearch, setToggleSearch] = useState(true);
+    const location = useLocation();
     const dispatch = useDispatch();
+
+    let pageName = location.pathname.split('/')[1];
+
+    useEffect(()=>{
+        if(pageName === 'movieDetails'){
+            setToggleSearch(false)
+        }else{
+            setToggleSearch(true)
+        }
+    },[location]);
 
     const searchTextHandler = (event) => {
         let searchText = event.target.value.toLowerCase().trim();
@@ -26,10 +37,13 @@ const NavBar = () => {
                     px-1 py-1 flex items-center
                     justify-between">
                     <div className="flex items-center gap-8">
-                        <h1 className="text-lg font-bold">Movie App</h1>
+                        <Link to='/'
+                            className="text-lg font-bold">
+                                Movie App
+                        </Link>
                     </div>
 
-                    <input
+                    {toggleSearch && <input
                         type="text"
                         placeholder="Search Movies..."
                         onChange={searchTextHandler}
@@ -37,7 +51,7 @@ const NavBar = () => {
                             p-2  bg-slate-700
                             focus:outline-none focus:ring-2
                          focus:ring-blue-500"
-                    />
+                    />}
                 </div>
             </nav>
 
