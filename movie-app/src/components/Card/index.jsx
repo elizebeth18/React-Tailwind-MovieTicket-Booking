@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Card = ({ movies }) => {
 
     return (
@@ -17,11 +19,12 @@ const Card = ({ movies }) => {
                   <h2 className="text-xl text-center font-bold mb-2">{movie?.title}</h2>
 
                   <div className="flex justify-center">
-                    <button
+                    <Link 
+                      to={`/movieDetails/${movie.id}/?movieTitle=${movie?.title}`}
                       className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                     >
                       Book Now
-                    </button>
+                    </Link>
                   </div>
                 </div>
             </div>

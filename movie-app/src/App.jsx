@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Error from './components/Error';
 import LatestMovies from './components/LatestMovies';
 import NearByEvents from './components/NearByEvents';
+import MovieDetails from './components/MovieDetails';
 
 const App = () => {
 
@@ -24,6 +25,10 @@ const App = () => {
         {
           path: '/nearbyEvents',
           element: <NearByEvents />
+        },
+        {
+          path: '/movieDetails/:movieId',
+          element: <MovieDetails />
         }
       ]
     }
