@@ -1,3 +1,4 @@
+import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
@@ -10,10 +11,21 @@ const TicketBookingForm = () => {
 
     const movie = useSelector(state => state.movies?.moviesList.find(movie => movie.title === movieTitle));
 
-    console.log(movie)
+    console.log(movie);
 
-    const onSubmitHandler = (data) => {
-        console.log(data);
+    const today = new Date().toISOString().split('T')[0]; 
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [showtime, setShowTime] = useState("");
+    const [seatType, setSeatType] = useState("");
+    const [date, setDate] = useState("");
+    const [ticketCount, setTicketCount] = useState(1);
+
+    const emailRef = useRef(null);
+
+    const validateEmailHandler = () => {
+
     }
 
     return (
@@ -28,10 +40,19 @@ const TicketBookingForm = () => {
                 placeholder="Movie Name" />
 
             <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onKeyDown={(e) => {
+                    if(e.key === "Enter"){
+                        emailRef.current.focus();
+                    }
+                }}
                 className="w-full p-3 mb-3 rounded border border-black"
                 placeholder="Name" />
 
-            <input
+            <input ref={emailRef} value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onBlur={validateEmailHandler}
                 className="w-full p-3 mb-3 rounded border border-black"
                 placeholder="Email" />
 
@@ -62,6 +83,12 @@ const TicketBookingForm = () => {
             <input
                 type="number"
                 min="1"
+                className="w-full border p-3 mb-3 rounded"
+            />
+
+            <input 
+                type="date"
+                min={today}
                 className="w-full border p-3 mb-3 rounded"
             />
 
