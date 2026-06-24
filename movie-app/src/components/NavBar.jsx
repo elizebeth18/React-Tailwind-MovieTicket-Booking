@@ -13,7 +13,8 @@ const NavBar = () => {
     let pageName = location.pathname.split('/')[1];
 
     useEffect(()=>{
-        if(pageName === 'movieDetails'){
+        if(pageName === 'movieDetails' || 
+            pageName === 'ticketbooking'){
             setToggleSearch(false)
         }else{
             setToggleSearch(true)

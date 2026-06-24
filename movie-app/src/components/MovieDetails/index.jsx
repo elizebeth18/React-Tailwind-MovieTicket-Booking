@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const MovieDetails = () => {
 
@@ -8,8 +8,13 @@ const MovieDetails = () => {
 
     const movie = useSelector(state => state.movies?.moviesList.find(movie => movie.title === title));
 
+    const navigate = useNavigate();
 
-    console.log(movie)
+    console.log(movie);
+
+    const bookTicketHandler = (id, title) => {
+        navigate(`/ticketbooking/?id=${id}&title=${title}`)
+    }
 
     return (
         <>
@@ -86,7 +91,9 @@ const MovieDetails = () => {
           ₹100
         </h2> */}
 
-        <button className="bg-amber-950 text-white px-6 py-3 rounded-xl hover:opacity-90">
+        <button 
+            onClick={() => { bookTicketHandler(movie.id, movie.title)}}
+            className="bg-amber-950 text-white px-6 py-3 rounded-xl hover:opacity-90">
           Book Now
         </button>
 

@@ -5,6 +5,7 @@ import Error from './components/Error';
 import LatestMovies from './components/LatestMovies';
 import NearByEvents from './components/NearByEvents';
 import MovieDetails from './components/MovieDetails';
+import TicketBookingForm from './components/Booking';
 
 const App = () => {
 
@@ -29,6 +30,10 @@ const App = () => {
         {
           path: '/movieDetails/:movieId',
           element: <MovieDetails />
+        },
+        {
+          path: '/ticketbooking',
+          element: <TicketBookingForm />
         }
       ]
     }
