@@ -13,7 +13,7 @@ const MovieDetails = () => {
 
     return (
         <>
-            {(!movie) ? <h1>Loading......</h1> :
+            {(!movie) ? <h1 className="text-center text-3xl text-amber-400">Loading......</h1> :
                 <>
                     <div className="max-w-6xl mx-auto p-6">
   <div className="grid md:grid-cols-2 gap-8 bg-white rounded-2xl shadow-lg overflow-hidden">
@@ -31,62 +31,65 @@ const MovieDetails = () => {
     <div className="p-6 flex flex-col justify-between">
 
       <div>
-        <h1 className="text-4xl font-bold mb-3">
-          {movie.title}
-        </h1>
 
-        <div className="flex flex-wrap gap-3 mb-4">
-          <span className="px-3 py-1 rounded-full bg-gray-100">
+        {/* Title + Release */}
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="font-bold text-3xl">
+            {movie?.title}
+          </h1>
+
+          <span className="px-3 py-1 rounded-full bg-gray-200 text-sm">
+            {movie?.releaseDate}
+          </span>
+        </div>
+
+        {/* Movie info */}
+        <div className="flex gap-4 flex-wrap mb-6">
+
+          <span className="bg-gray-100 px-3 py-1 rounded-full">
             ⭐ {movie?.rating}
           </span>
 
-          <span className="px-3 py-1 rounded-full bg-gray-100">
-            {movie.duration}
+          <span className="bg-gray-100 px-3 py-1 rounded-full">
+            {movie?.duration}
           </span>
 
-          <span className="px-3 py-1 rounded-full bg-gray-100">
-            {movie.language}
+          <span className="bg-gray-100 px-3 py-1 rounded-full">
+            {movie?.language}
           </span>
+
         </div>
 
-        <div className="flex gap-2 flex-wrap mb-5">
+        {/* Genres */}
+        <div className="flex gap-2 flex-wrap mb-6">
+          {movie?.genre?.map((item) => (
             <span
-              className="bg-blue-100 px-3 py-1 rounded-full text-sm"
+              key={item}
+              className="bg-blue-200 px-3 py-1 rounded-full text-sm"
             >
-              {movie.genre}
+              {item}
             </span>
+          ))}
         </div>
 
+        {/* Description */}
         <p className="text-gray-600 leading-7">
           {movie?.plot}
         </p>
 
-        <div className="mt-6">
-          <h3 className="font-semibold mb-3">
-            Show Times
-          </h3>
-
-          <div className="flex flex-wrap gap-3">
-            {movie?.showtimes.map((time) => (
-              <button
-                key={time}
-                className="border rounded-lg px-4 py-2 hover:bg-black hover:text-white transition"
-              >
-                {time}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-between">
-        <h2 className="text-2xl font-bold">
-           100 //₹{movie.price}
-        </h2>
+      {/* Bottom section */}
+      <div className="mt-8 flex justify-between items-center">
 
-        <button className="bg-black text-white px-8 py-3 rounded-xl hover:opacity-90">
-          Book Tickets
+        {/* <h2 className="text-2xl font-bold">
+          ₹100
+        </h2> */}
+
+        <button className="bg-amber-950 text-white px-6 py-3 rounded-xl hover:opacity-90">
+          Book Now
         </button>
+
       </div>
 
     </div>
