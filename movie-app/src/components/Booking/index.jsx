@@ -2,6 +2,7 @@ import { useState, useRef, useMemo, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { bookMovieTicketThunk } from '../../store/bookMovieTicketSlice';
+import Popup from "./PopUp";
 
 const TicketBookingForm = () => {
 
@@ -12,10 +13,6 @@ const TicketBookingForm = () => {
 
     const movie = useSelector(state => state.movies?.moviesList.find(movie => movie.title === movieTitle));
 
-    const bookMovieTicketSuccess = useSelector(state => state.bookMovieTicket?.isSuccess);
-
-    console.log(movie);
-
     const today = new Date().toISOString().split('T')[0];
 
     const [name, setName] = useState("");
@@ -24,6 +21,7 @@ const TicketBookingForm = () => {
     const [seatType, setSeatType] = useState("");
     const [date, setDate] = useState("");
     const [ticketCount, setTicketCount] = useState(1);
+    const [showPopup, setShowPopup] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -43,7 +41,8 @@ const TicketBookingForm = () => {
 
     }, [seatType, ticketCount]);
 
-    const submitFormHandler = useCallback(() => {
+    const submitFormHandler = async () => {
+        
         const bookingDetails = {
             movieId,
             movieTitle,
@@ -55,128 +54,131 @@ const TicketBookingForm = () => {
             ticketCount,
             totalPrice
         }
-        dispatch(bookMovieTicketThunk(bookingDetails));
 
-    }, [
-        movieId,
-        movieTitle,
-        name,
-        email,
-        showtime,
-        seatType,
-        date,
-        ticketCount,
-        totalPrice,
-        dispatch
-    ]);
+        if (name !== "" && email !== "" && date !== ""
+            && showtime !== "" && seatType !== "") {
 
-    if(bookMovieTicketSuccess){
-        alert("Ticket booked successfully")
+            try {
+                await dispatch(bookMovieTicketThunk(bookingDetails)).unwrap();
+
+                setShowPopup(true);
+            } catch (error) {
+                alert('Error',error);
+            }
+
+        }
     }
 
     return (
-        <div className="max-w-md mx-auto my-6 p-6 bg-white rounded-lg shadow">
+        <>
+            {showPopup && (
+                <Popup
+                    onClose={() => setShowPopup(false)}
+                />
+            )}
+            <div className="max-w-md mx-auto my-6 p-6 bg-white rounded-lg shadow">
 
-            <h1 className="text-2xl font-bold mb-5">
-                Book Ticket
-            </h1>
+                <h1 className="text-2xl font-bold mb-5">
+                    Book Ticket
+                </h1>
 
-            <input value={movieTitle} disabled
-                className="w-full p-3 mb-3 rounded border border-black"
-                placeholder="Movie Name" />
+                <input value={movieTitle} disabled
+                    className="w-full p-3 mb-3 rounded border border-black"
+                    placeholder="Movie Name" />
 
-            <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                        emailRef.current.focus();
-                    }
-                }}
-                className={`w-full p-3  rounded border
+                <input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            emailRef.current.focus();
+                        }
+                    }}
+                    className={`w-full p-3  rounded border
                  ${name.trim() === "" ? "border-red-500 mb-1" : "border-black mb-3"}`}
-                placeholder="Name" />
+                    placeholder="Name" />
 
-            {name === "" && <p className="text-red-700 mb-3">
-                Name is required
-            </p>}
+                {name === "" && <p className="text-red-700 mb-3">
+                    Name is required
+                </p>}
 
-            <input ref={emailRef} value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={`w-full p-3 rounded border 
+                <input ref={emailRef} value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={`w-full p-3 rounded border 
                  ${(email.trim() === "" || !emailIsValid) ? "border-red-500 mb-1" : "border-black mb-3"}`}
-                placeholder="Email" />
+                    placeholder="Email" />
 
-            {(email === "" || !emailIsValid) && <p className="text-red-700 mb-2">
-                Valid Email is required
-            </p>}
+                {(email === "" || !emailIsValid) && <p className="text-red-700 mb-2">
+                    Valid Email is required
+                </p>}
 
-            <select
-                className={`w-full p-3 mb-3 rounded border ${showtime === "" ? "border-red-500" : "border-black"} `}
-                onChange={(e) => { setShowTime(e.target.value); }}
-            >
-                <option value="">Select Show Timings</option>
-                {movie?.showtimes.map(showtime => (<option value={showtime}>{showtime}</option>))}
-            </select>
+                <select
+                    className={`w-full p-3 mb-3 rounded border ${showtime === "" ? "border-red-500" : "border-black"} `}
+                    onChange={(e) => { setShowTime(e.target.value); }}
+                >
+                    <option value="">Select Show Timings</option>
+                    {movie?.showtimes.map(showtime => (<option value={showtime}>{showtime}</option>))}
+                </select>
 
-            {showtime === "" && <p className="text-red-700 mb-3">
-                Please select the movie show time
-            </p>}
+                {showtime === "" && <p className="text-red-700 mb-3">
+                    Please select the movie show time
+                </p>}
 
-            <select
-                onChange={(e) => { setSeatType(e.target.value); }}
-                className={`w-full p-3 mb-3 rounded border ${seatType==="" ?"border-red-500":"border-black"}`}
-            >
-                <option value="">
-                    Select Seat
-                </option>
+                <select
+                    onChange={(e) => { setSeatType(e.target.value); }}
+                    className={`w-full p-3 mb-3 rounded border ${seatType === "" ? "border-red-500" : "border-black"}`}
+                >
+                    <option value="">
+                        Select Seat
+                    </option>
 
-                <option value="normal">
-                    Normal ₹200
-                </option>
+                    <option value="normal">
+                        Normal ₹200
+                    </option>
 
-                <option value="superior">
-                    Superior ₹300
-                </option>
-                <option value="sofa">
-                    Sofa ₹600
-                </option>
-            </select>
+                    <option value="superior">
+                        Superior ₹300
+                    </option>
+                    <option value="sofa">
+                        Sofa ₹600
+                    </option>
+                </select>
 
-            {seatType === "" && <p className="text-red-700 mb-3">
-                Please select the seat
-            </p>}
+                {seatType === "" && <p className="text-red-700 mb-3">
+                    Please select the seat
+                </p>}
 
-            <input
-                type="number"
-                min="1"
-                value={ticketCount}
-                onChange={(e) => { setTicketCount(parseInt(e.target.value)) }}
-                className="w-full border p-3 mb-3 rounded"
-            />
+                <input
+                    type="number"
+                    min="1"
+                    value={ticketCount}
+                    onChange={(e) => { setTicketCount(parseInt(e.target.value)) }}
+                    className="w-full border p-3 mb-3 rounded"
+                />
 
-            <input
-                type="date"
-                min={today}
-                onChange={(e) => { setDate(e.target.value) }}
-                className={`w-full p-3 mb-3 rounded border ${date ==="" ?"border-red-500":"border-black"}`}
-            />
+                <input
+                    type="date"
+                    min={today}
+                    onChange={(e) => { setDate(e.target.value) }}
+                    className={`w-full p-3 mb-3 rounded border ${date === "" ? "border-red-500" : "border-black"}`}
+                />
 
-            {date === "" && <p className="text-red-700 mb-3">
-                Please select the date
-            </p>}
+                {date === "" && <p className="text-red-700 mb-3">
+                    Please select the date
+                </p>}
 
-            <div className="mb-4 font-bold">
-                Total: ₹{totalPrice}
+                <div className="mb-4 font-bold">
+                    Total: ₹{totalPrice}
+                </div>
+
+                <button
+                    onClick={submitFormHandler}
+                    className="bg-blue-500 text-white px-4 py-2 rounded w-full">
+                    Book Now
+                </button>
+
             </div>
-
-            <button
-                onClick={submitFormHandler}
-                className="bg-blue-500 text-white px-4 py-2 rounded w-full">
-                Book Now
-            </button>
-
-        </div>
+        </>
     )
 }
 
