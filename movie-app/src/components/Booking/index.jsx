@@ -12,6 +12,8 @@ const TicketBookingForm = () => {
 
     const movie = useSelector(state => state.movies?.moviesList.find(movie => movie.title === movieTitle));
 
+    const bookMovieTicketSuccess = useSelector(state => state.bookMovieTicket?.isSuccess);
+
     console.log(movie);
 
     const today = new Date().toISOString().split('T')[0];
@@ -27,9 +29,7 @@ const TicketBookingForm = () => {
 
     const emailRef = useRef(null);
 
-    const validateEmailHandler = () => {
-
-    }
+    const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
     const totalPrice = useMemo(() => {
 
@@ -51,25 +51,28 @@ const TicketBookingForm = () => {
             email,
             showtime,
             seatType,
-            date, 
+            date,
             ticketCount,
             totalPrice
         }
-
         dispatch(bookMovieTicketThunk(bookingDetails));
 
-
-    },[
+    }, [
         movieId,
         movieTitle,
         name,
         email,
         showtime,
-        seatType, 
-        date, 
-        ticketCount, 
-        totalPrice
+        seatType,
+        date,
+        ticketCount,
+        totalPrice,
+        dispatch
     ]);
+
+    if(bookMovieTicketSuccess){
+        alert("Ticket booked successfully")
+    }
 
     return (
         <div className="max-w-md mx-auto my-6 p-6 bg-white rounded-lg shadow">
@@ -90,26 +93,40 @@ const TicketBookingForm = () => {
                         emailRef.current.focus();
                     }
                 }}
-                className="w-full p-3 mb-3 rounded border border-black"
+                className={`w-full p-3  rounded border
+                 ${name.trim() === "" ? "border-red-500 mb-1" : "border-black mb-3"}`}
                 placeholder="Name" />
+
+            {name === "" && <p className="text-red-700 mb-3">
+                Name is required
+            </p>}
 
             <input ref={emailRef} value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                onBlur={validateEmailHandler}
-                className="w-full p-3 mb-3 rounded border border-black"
+                className={`w-full p-3 rounded border 
+                 ${(email.trim() === "" || !emailIsValid) ? "border-red-500 mb-1" : "border-black mb-3"}`}
                 placeholder="Email" />
 
+            {(email === "" || !emailIsValid) && <p className="text-red-700 mb-2">
+                Valid Email is required
+            </p>}
+
             <select
-                className="w-full p-3 mb-3 rounded border border-black"
+                className={`w-full p-3 mb-3 rounded border ${showtime === "" ? "border-red-500" : "border-black"} `}
                 onChange={(e) => { setShowTime(e.target.value); }}
             >
                 <option value="">Select Show Timings</option>
                 {movie?.showtimes.map(showtime => (<option value={showtime}>{showtime}</option>))}
             </select>
 
+            {showtime === "" && <p className="text-red-700 mb-3">
+                Please select the movie show time
+            </p>}
+
             <select
                 onChange={(e) => { setSeatType(e.target.value); }}
-                className="w-full p-3 mb-3 rounded border border-black">
+                className={`w-full p-3 mb-3 rounded border ${seatType==="" ?"border-red-500":"border-black"}`}
+            >
                 <option value="">
                     Select Seat
                 </option>
@@ -126,6 +143,10 @@ const TicketBookingForm = () => {
                 </option>
             </select>
 
+            {seatType === "" && <p className="text-red-700 mb-3">
+                Please select the seat
+            </p>}
+
             <input
                 type="number"
                 min="1"
@@ -138,8 +159,12 @@ const TicketBookingForm = () => {
                 type="date"
                 min={today}
                 onChange={(e) => { setDate(e.target.value) }}
-                className="w-full border p-3 mb-3 rounded"
+                className={`w-full p-3 mb-3 rounded border ${date ==="" ?"border-red-500":"border-black"}`}
             />
+
+            {date === "" && <p className="text-red-700 mb-3">
+                Please select the date
+            </p>}
 
             <div className="mb-4 font-bold">
                 Total: ₹{totalPrice}

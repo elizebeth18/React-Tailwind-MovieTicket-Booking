@@ -23,12 +23,12 @@ const bookMovieTicketSlice = createSlice({
     initialState,
     reducers:{},
     extraReducers: (builder) =>{
-        builder.addCase(bookMovieTicketThunk.pending, (state, action) => {
+        builder.addCase(bookMovieTicketThunk.pending, (state) => {
             state.isSuccess = false
         }).addCase(bookMovieTicketThunk.fulfilled,(state, action) => {
             state.isSuccess = true;
             console.log(action.payload)
-        }).addCase(bookMovieTicketThunk.rejected,(state, action) => {
+        }).addCase(bookMovieTicketThunk.rejected,(state) => {
             state.isSuccess = false;
         })
     }
