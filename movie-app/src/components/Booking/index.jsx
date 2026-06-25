@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
@@ -13,7 +13,7 @@ const TicketBookingForm = () => {
 
     console.log(movie);
 
-    const today = new Date().toISOString().split('T')[0]; 
+    const today = new Date().toISOString().split('T')[0];
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -27,6 +27,18 @@ const TicketBookingForm = () => {
     const validateEmailHandler = () => {
 
     }
+
+    const totalPrice = useMemo(() => {
+
+        const prices = {
+            normal: 200,
+            superior: 300,
+            sofa: 600
+        }
+
+        return prices[seatType] ? prices[seatType] * ticketCount : 0;
+
+    }, [seatType, ticketCount]);
 
     return (
         <div className="max-w-md mx-auto my-6 p-6 bg-white rounded-lg shadow">
@@ -43,7 +55,7 @@ const TicketBookingForm = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 onKeyDown={(e) => {
-                    if(e.key === "Enter"){
+                    if (e.key === "Enter") {
                         emailRef.current.focus();
                     }
                 }}
@@ -57,12 +69,15 @@ const TicketBookingForm = () => {
                 placeholder="Email" />
 
             <select
-                className="w-full p-3 mb-3 rounded border border-black">
+                className="w-full p-3 mb-3 rounded border border-black"
+                onChange={(e) => { setShowTime(e.target.value); }}
+            >
                 <option value="">Select Show Timings</option>
                 {movie?.showtimes.map(showtime => (<option value={showtime}>{showtime}</option>))}
             </select>
 
             <select
+                onChange={(e) => { setSeatType(e.target.value); }}
                 className="w-full p-3 mb-3 rounded border border-black">
                 <option value="">
                     Select Seat
@@ -83,17 +98,19 @@ const TicketBookingForm = () => {
             <input
                 type="number"
                 min="1"
+                value={ticketCount}
+                onChange={(e) => { setTicketCount(parseInt(e.target.value)) }}
                 className="w-full border p-3 mb-3 rounded"
             />
 
-            <input 
+            <input
                 type="date"
                 min={today}
                 className="w-full border p-3 mb-3 rounded"
             />
 
             <div className="mb-4 font-bold">
-                Total: ₹
+                Total: ₹{totalPrice}
             </div>
 
             <button
