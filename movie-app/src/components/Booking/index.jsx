@@ -1,6 +1,7 @@
-import { useState, useRef, useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useState, useRef, useMemo, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { bookMovieTicketThunk } from '../../store/bookMovieTicketSlice';
 
 const TicketBookingForm = () => {
 
@@ -22,6 +23,8 @@ const TicketBookingForm = () => {
     const [date, setDate] = useState("");
     const [ticketCount, setTicketCount] = useState(1);
 
+    const dispatch = useDispatch();
+
     const emailRef = useRef(null);
 
     const validateEmailHandler = () => {
@@ -39,6 +42,34 @@ const TicketBookingForm = () => {
         return prices[seatType] ? prices[seatType] * ticketCount : 0;
 
     }, [seatType, ticketCount]);
+
+    const submitFormHandler = useCallback(() => {
+        const bookingDetails = {
+            movieId,
+            movieTitle,
+            name,
+            email,
+            showtime,
+            seatType,
+            date, 
+            ticketCount,
+            totalPrice
+        }
+
+        dispatch(bookMovieTicketThunk(bookingDetails));
+
+
+    },[
+        movieId,
+        movieTitle,
+        name,
+        email,
+        showtime,
+        seatType, 
+        date, 
+        ticketCount, 
+        totalPrice
+    ]);
 
     return (
         <div className="max-w-md mx-auto my-6 p-6 bg-white rounded-lg shadow">
@@ -106,6 +137,7 @@ const TicketBookingForm = () => {
             <input
                 type="date"
                 min={today}
+                onChange={(e) => { setDate(e.target.value) }}
                 className="w-full border p-3 mb-3 rounded"
             />
 
@@ -114,6 +146,7 @@ const TicketBookingForm = () => {
             </div>
 
             <button
+                onClick={submitFormHandler}
                 className="bg-blue-500 text-white px-4 py-2 rounded w-full">
                 Book Now
             </button>
