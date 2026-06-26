@@ -24,7 +24,7 @@ const moviesSlice = createSlice({
     reducers: {
         searchMovies: (state, action) => {
             state.filteredMoviesList = state.moviesList.filter((movie) => movie.title.trim().toLowerCase().includes(action.payload.trim()));
-            console.log(state.filteredMoviesList);
+            //console.log(state.filteredMoviesList);
         }
     },
     extraReducers: (builder) => {
@@ -34,7 +34,7 @@ const moviesSlice = createSlice({
         })
         builder.addCase(fetchMovies.fulfilled, (state, action) => {
             state.isLoading = false;
-            console.log(action.payload)
+            //console.log(action.payload)
             state.moviesList = [...action.payload]
         })
         builder.addCase(fetchMovies.rejected,(state, action) => {
