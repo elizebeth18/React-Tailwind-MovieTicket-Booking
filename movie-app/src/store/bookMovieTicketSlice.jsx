@@ -4,7 +4,9 @@ import axios from 'axios';
 export const base_url = import.meta.env.VITE_API_URL;
 
 const initialState = {
-    isSuccess: false
+    loading: false,
+    error: "",
+    transaction: {}
 }
 
 export const bookMovieTicketThunk = createAsyncThunk('bookMovieTicket/post', async (data) => {
@@ -24,12 +26,15 @@ const bookMovieTicketSlice = createSlice({
     reducers:{},
     extraReducers: (builder) =>{
         builder.addCase(bookMovieTicketThunk.pending, (state) => {
-            state.isSuccess = false
+            state.loading = true;
+            state.error = null;
         }).addCase(bookMovieTicketThunk.fulfilled,(state, action) => {
-            state.isSuccess = true;
+            state.loading = false;
             console.log(action.payload)
-        }).addCase(bookMovieTicketThunk.rejected,(state) => {
-            state.isSuccess = false;
+            state.transaction = action.payload;
+        }).addCase(bookMovieTicketThunk.rejected,(state, action) => {
+            state.loading = false;
+            state.error = action.error.message
         })
     }
 });

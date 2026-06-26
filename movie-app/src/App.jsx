@@ -6,6 +6,7 @@ import LatestMovies from './components/LatestMovies';
 import NearByEvents from './components/NearByEvents';
 import MovieDetails from './components/MovieDetails';
 import TicketBookingForm from './components/Booking';
+import TicketQRCode from './components/Booking/TicketQRCode';
 
 const App = () => {
 
@@ -34,6 +35,10 @@ const App = () => {
         {
           path: '/ticketbooking',
           element: <TicketBookingForm />
+        },
+        {
+          path: '/ticketQRCode',
+          element: <TicketQRCode />
         }
       ]
     }

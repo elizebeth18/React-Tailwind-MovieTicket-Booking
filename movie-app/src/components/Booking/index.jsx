@@ -1,33 +1,53 @@
-import { useState, useRef, useMemo, useCallback } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
-import { bookMovieTicketThunk } from '../../store/bookMovieTicketSlice';
-import Popup from "./PopUp";
+import { bookMovieTicketThunk } from '../../store/bookMovieTicketSlice'
+import Alert from "./PopUp";
 
 const TicketBookingForm = () => {
 
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    const movieId = searchParams.get('id');
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const movieTitle = searchParams.get('title');
 
-    const movie = useSelector(state => state.movies?.moviesList.find(movie => movie.title === movieTitle));
-
-    const today = new Date().toISOString().split('T')[0];
-
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [showtime, setShowTime] = useState("");
-    const [seatType, setSeatType] = useState("");
-    const [date, setDate] = useState("");
-    const [ticketCount, setTicketCount] = useState(1);
-    const [showPopup, setShowPopup] = useState(false);
+    const movieList = useSelector(state => state.movies?.moviesList)
+    const movie = movieList.find(movie => movie.title === movieTitle);
 
     const dispatch = useDispatch();
 
-    const emailRef = useRef(null);
+    const today = new Date().toISOString().split("T")[0];
 
-    const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        showtime: "",
+        seatType: "",
+        ticketCount: 1,
+        date: ""
+    });
+
+    const [errors, setErrors] = useState({});
+    const [showPopup, setShowPopup] = useState(false);
+console.log("Component rendered");
+    useEffect(()=>{
+        console.log("Booking page mounted")
+
+        return () => {
+            console.log("Booking page unmounted")
+        }
+    },[]);
+
+    const inputChangeHandler = (e) => {
+
+        const { name, value } = e.target;
+
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+
 
     const totalPrice = useMemo(() => {
 
@@ -35,102 +55,140 @@ const TicketBookingForm = () => {
             normal: 200,
             superior: 300,
             sofa: 600
+        };
+
+        return prices[formData.seatType] ? prices[formData.seatType] * formData.ticketCount : 0;
+
+    }, [
+        formData.seatType,
+        formData.ticketCount
+    ]);
+
+
+    const validateForm = () => {
+
+        const newErrors = {};
+
+        if (formData.name.trim() === "") {
+            newErrors.name = "Name required";
         }
 
-        return prices[seatType] ? prices[seatType] * ticketCount : 0;
+        if (formData.email.trim() === "") {
+            newErrors.email = "Email required";
+        }
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = "Invalid email";
+        }
 
-    }, [seatType, ticketCount]);
+        if (formData.showtime === "") {
+            newErrors.showtime = "Select showtime";
+        }
 
-    const submitFormHandler = async () => {
-        
+        if (formData.seatType === "") {
+            newErrors.seatType = "Select seat";
+        }
+
+        if (formData.date === "") {
+            newErrors.date ="Select date";
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
+
+
+    const submitFormHandler = async (e) => {
+
+        e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
+
         const bookingDetails = {
-            movieId,
             movieTitle,
-            name,
-            email,
-            showtime,
-            seatType,
-            date,
-            ticketCount,
+            ...formData,
             totalPrice
-        }
+        };
 
-        if (name !== "" && email !== "" && date !== ""
-            && showtime !== "" && seatType !== "") {
+        try {
+             alert("ticket booked successfully")
+            await dispatch(bookMovieTicketThunk(bookingDetails))
 
-            try {
-                await dispatch(bookMovieTicketThunk(bookingDetails)).unwrap();
-
-                setShowPopup(true);
-            } catch (error) {
-                alert('Error',error);
-            }
+            navigate("/ticketQRCode");
 
         }
-    }
+        catch (error) {
+
+            alert("Booking failed");
+        }
+
+    };
+
 
     return (
         <>
             {showPopup && (
-                <Popup
-                    onClose={() => setShowPopup(false)}
-                />
-            )}
-            <div className="max-w-md mx-auto my-6 p-6 bg-white rounded-lg shadow">
+        <Alert
+            message="Ticket booked successfully 🎉"
+            onClose={() => setShowPopup(false)}
+        />
+    )}
+            <form
+                onSubmit={submitFormHandler}
+                className="max-w-md mx-auto p-6 my-5 bg-white rounded-lg">
 
-                <h1 className="text-2xl font-bold mb-5">
-                    Book Ticket
-                </h1>
-
-                <input value={movieTitle} disabled
-                    className="w-full p-3 mb-3 rounded border border-black"
-                    placeholder="Movie Name" />
+                <h1 className="font-bold text-xl mb-5 text-center">
+                    Book Movie Ticket</h1>
 
                 <input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            emailRef.current.focus();
-                        }
-                    }}
-                    className={`w-full p-3  rounded border
-                 ${name.trim() === "" ? "border-red-500 mb-1" : "border-black mb-3"}`}
-                    placeholder="Name" />
+                    disabled className="w-full p-3 border mb-2 rounded"
+                    value={movieTitle} />
 
-                {name === "" && <p className="text-red-700 mb-3">
-                    Name is required
-                </p>}
+                <input name="name" className="w-full p-3 border mb-2 rounded"
+                    value={formData.name} placeholder="Name"
+                    onChange={inputChangeHandler}
+                />
 
-                <input ref={emailRef} value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className={`w-full p-3 rounded border 
-                 ${(email.trim() === "" || !emailIsValid) ? "border-red-500 mb-1" : "border-black mb-3"}`}
-                    placeholder="Email" />
+                {errors.name &&
+                    <p className="text-red-500">
+                        {errors.name}
+                    </p>}
 
-                {(email === "" || !emailIsValid) && <p className="text-red-700 mb-2">
-                    Valid Email is required
-                </p>}
+                <input name="email" className="w-full p-3 border mb-2 rounded"
+                    value={formData.email} placeholder="Email"
+                    onChange={inputChangeHandler}
+                />
 
-                <select
-                    className={`w-full p-3 mb-3 rounded border ${showtime === "" ? "border-red-500" : "border-black"} `}
-                    onChange={(e) => { setShowTime(e.target.value); }}
-                >
-                    <option value="">Select Show Timings</option>
-                    {movie?.showtimes.map(showtime => (<option value={showtime}>{showtime}</option>))}
+                {errors.email &&
+                    <p className="text-red-500">
+                        {errors.email}
+                    </p>}
+
+                <select name="showtime" value={formData.showtime}
+                    onChange={inputChangeHandler}
+                    className="w-full p-3 border mb-2 rounded" >
+                    <option value="">Select Show Time</option>
+                    {movie?.showtimes.map(showtime => (
+                        <option
+                            key={showtime}
+                            value={showtime}
+                        >
+                            {showtime}
+                        </option>
+                    ))}
                 </select>
 
-                {showtime === "" && <p className="text-red-700 mb-3">
-                    Please select the movie show time
-                </p>}
+                {errors.showtime &&
+                    <p className="text-red-500">
+                        {errors.showtime}
+                    </p>}
 
-                <select
-                    onChange={(e) => { setSeatType(e.target.value); }}
-                    className={`w-full p-3 mb-3 rounded border ${seatType === "" ? "border-red-500" : "border-black"}`}
-                >
-                    <option value="">
-                        Select Seat
-                    </option>
+                <select name="seatType" value={formData.seatType}
+                    onChange={inputChangeHandler}
+                    className="w-full p-3 border mb-2 rounded" >
+                    <option value="">Select Seat</option>
 
                     <option value="normal">
                         Normal ₹200
@@ -139,45 +197,42 @@ const TicketBookingForm = () => {
                     <option value="superior">
                         Superior ₹300
                     </option>
+
                     <option value="sofa">
                         Sofa ₹600
                     </option>
                 </select>
 
-                {seatType === "" && <p className="text-red-700 mb-3">
-                    Please select the seat
-                </p>}
+                {errors.seatType &&
+                    <p className="text-red-500">
+                        {errors.seatType}
+                    </p>}
 
-                <input
-                    type="number"
-                    min="1"
-                    value={ticketCount}
-                    onChange={(e) => { setTicketCount(parseInt(e.target.value)) }}
-                    className="w-full border p-3 mb-3 rounded"
+                <input type="number" min="1"
+                    name="ticketCount" className="w-full p-3 border mb-2 rounded"
+                    value={formData.ticketCount}
+                    onChange={inputChangeHandler}
                 />
 
-                <input
-                    type="date"
-                    min={today}
-                    onChange={(e) => { setDate(e.target.value) }}
-                    className={`w-full p-3 mb-3 rounded border ${date === "" ? "border-red-500" : "border-black"}`}
+                <input type="date" min={today}
+                    name="date" className="w-full p-3 border mb-2 rounded"
+                    value={formData.date} placeholder="Date"
+                    onChange={inputChangeHandler}
                 />
 
-                {date === "" && <p className="text-red-700 mb-3">
-                    Please select the date
-                </p>}
+                {errors.date &&
+                    <p className="text-red-500">
+                        {errors.date}
+                    </p>}
 
-                <div className="mb-4 font-bold">
+                <div className="mt-4 font-bold">
                     Total: ₹{totalPrice}
                 </div>
 
-                <button
-                    onClick={submitFormHandler}
-                    className="bg-blue-500 text-white px-4 py-2 rounded w-full">
-                    Book Now
-                </button>
+                <button className="bg-blue-500 text-white rounded w-full p-3"
+                    type="submit">Book Ticket</button>
 
-            </div>
+            </form>
         </>
     )
 }

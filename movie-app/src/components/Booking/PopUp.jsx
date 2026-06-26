@@ -1,52 +1,36 @@
-const Popup = ({ onClose }) => {
+const Alert = ({ message, onClose }) => {
     return (
-
-        <div
-            className="
+        <div className="
             fixed
-            inset-0
-            bg-black/50
+            top-5
+            right-5
+            bg-green-500
+            text-white
+            px-6
+            py-4
+            rounded-lg
+            shadow-lg
             flex
             items-center
-            justify-center
-          "
-        >
-            <div
+            gap-4
+        ">
+            <span>{message}</span>
+
+            <button
+                onClick={onClose}
                 className="
-              bg-white
-              p-6
-              rounded-xl
-              shadow-xl
-              w-96
-            "
+                    bg-white
+                    text-green-600
+                    px-3
+                    py-1
+                    rounded
+                    font-bold
+                "
             >
-                <h2 className="text-2xl font-bold mb-4">
-                    Booking Successful 🎉
-                </h2>
-
-                <p className="text-gray-600 mb-4">
-                    Your movie ticket has been booked.
-                </p>
-
-                <button
-                    onClick={onClose}
-                    className="
-                w-full
-                bg-red-500
-                text-white
-                py-2
-                rounded-lg
-              "
-                >
-                    Close
-                </button>
-
-            </div>
+                ×
+            </button>
         </div>
+    );
+};
 
-
-
-    )
-}
-
-export default Popup;
+export default Alert;

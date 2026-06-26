@@ -10,7 +10,7 @@ const MovieDetails = () => {
 
     const navigate = useNavigate();
 
-    console.log(movie);
+    //console.log(movie);
 
     const bookTicketHandler = (id, title) => {
         navigate(`/ticketbooking/?id=${id}&title=${title}`)
