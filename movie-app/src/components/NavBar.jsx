@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { searchMovies } from '../store/movieSlice';
 import { searchLatestMovies } from '../store/latestMoviesSlice';
+import { SearchContext } from '../context/context';
 
 const NavBar = () => {
 
@@ -10,10 +11,13 @@ const NavBar = () => {
     const location = useLocation();
     const dispatch = useDispatch();
 
+    const {searchText, setSearchText } =  useContext(SearchContext);
+
     let pageName = location.pathname.split('/')[1];
 
     useEffect(()=>{
         if(pageName === 'movieDetails' || 
+            pageName === 'ticketQRCode'||
             pageName === 'ticketbooking'){
             setToggleSearch(false)
         }else{
@@ -27,7 +31,8 @@ const NavBar = () => {
         if(location.pathname === '/latestMovies'){
             dispatch(searchLatestMovies(searchText));
         }else {
-            dispatch(searchMovies(searchText));
+            setSearchText(searchText);
+            //dispatch(searchMovies(searchText));
         }
     }
 
@@ -46,12 +51,11 @@ const NavBar = () => {
 
                     {toggleSearch && <input
                         type="text"
+                        value={searchText}
                         placeholder="Search Movies..."
                         onChange={searchTextHandler}
-                        className="w-64 rounded-lg 
-                            p-2  bg-slate-700
-                            focus:outline-none focus:ring-2
-                         focus:ring-blue-500"
+                        className="w-64 rounded-lg p-2 bg-slate-700
+                        focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />}
                 </div>
             </nav>

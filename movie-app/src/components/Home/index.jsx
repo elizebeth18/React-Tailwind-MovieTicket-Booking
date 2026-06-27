@@ -1,15 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useContext, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from "../../store/movieSlice"
 
 import TabsBar from "../TabsBar";
 import MovieSlider from "../MoviesSlider";
 import RecommendedMovies from "../RecommendedMovies";
-
+import { SearchContext } from "../../context/context";
 
 const Home = () => {
 
-  const redux_moviesList = useSelector((state) => state.movies?.filteredMoviesList.length > 0 ? state.movies?.filteredMoviesList : state.movies?.moviesList);
+  const { searchText } = useContext(SearchContext);
+
+  let redux_moviesList = useSelector((state) => state.movies?.moviesList);
 
   const sliderMoviesList = useSelector((state) => state.movies?.moviesList);
 
@@ -17,14 +19,19 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchMovies());
-  },[dispatch]);
+  }, [dispatch]);
+
+
+  const filteredList = useMemo(() => {
+    return (redux_moviesList && redux_moviesList.filter((movie) => movie.title.toLowerCase().includes(searchText)));
+  }, [searchText, redux_moviesList]);
 
 
   return (
     <>
       <TabsBar />
       <MovieSlider movies={sliderMoviesList} />
-      <RecommendedMovies movies={redux_moviesList} />
+      <RecommendedMovies movies={searchText === "" ? redux_moviesList : filteredList} />
     </>
   )
 }
