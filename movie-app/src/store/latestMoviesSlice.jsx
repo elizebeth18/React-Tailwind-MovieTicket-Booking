@@ -5,7 +5,6 @@ export const base_url = import.meta.env.VITE_API_URL;
 
 const initialState = {
     latestMovies: [],
-    filteredLatestMovies: [],
     isLoading: false,
     error: null
 }
@@ -19,13 +18,7 @@ export const latestMoviesThunk = createAsyncThunk('latestMovies/fetch', async ()
 const latestMoviesSlice = createSlice({
     name: 'latestMovies',
     initialState,
-    reducers:{
-        searchLatestMovies: (state, action) => {
-            state.filteredLatestMovies = state.latestMovies.filter(movie =>{
-                return movie.title.toLowerCase().includes(action.payload.toLowerCase())
-            });
-        }
-    },
+    reducers:{},
     extraReducers: (builder) => {
         builder.addCase(latestMoviesThunk.pending, (state) => {
             state.isLoading = true;
@@ -41,5 +34,4 @@ const latestMoviesSlice = createSlice({
     }
 });
 
-export const { searchLatestMovies } = latestMoviesSlice.actions;
 export default latestMoviesSlice.reducer;
