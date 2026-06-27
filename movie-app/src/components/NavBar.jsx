@@ -1,15 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { searchMovies } from '../store/movieSlice';
-import { searchLatestMovies } from '../store/latestMoviesSlice';
 import { SearchContext } from '../context/context';
 
 const NavBar = () => {
 
     const [toggleSearch, setToggleSearch] = useState(true);
     const location = useLocation();
-    const dispatch = useDispatch();
 
     const {searchText, setSearchText } =  useContext(SearchContext);
 
@@ -17,6 +13,7 @@ const NavBar = () => {
 
     useEffect(()=>{
         if(pageName === 'movieDetails' || 
+            pageName === 'nearbyEvents'||
             pageName === 'ticketQRCode'||
             pageName === 'ticketbooking'){
             setToggleSearch(false)
@@ -27,13 +24,7 @@ const NavBar = () => {
 
     const searchTextHandler = (event) => {
         let searchText = event.target.value.toLowerCase().trim();
-        
-        if(location.pathname === '/latestMovies'){
-            dispatch(searchLatestMovies(searchText));
-        }else {
-            setSearchText(searchText);
-            //dispatch(searchMovies(searchText));
-        }
+        setSearchText(searchText);
     }
 
     return (

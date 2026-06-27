@@ -26,7 +26,9 @@ const Card = ({ movies }) => {
 
               <div className="flex justify-center">
                 <button
-                  onClick={() => { bookNowHandler(movie?.id, movie?.title) }}
+                  onClick={() => { 
+                    bookNowHandler(movie?.id, movie?.title);
+                  }}
                   className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                 >
                   Book Now

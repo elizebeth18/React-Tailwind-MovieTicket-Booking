@@ -1,25 +1,29 @@
-import { useEffect } from "react"
+import { useEffect, useMemo, useContext } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { latestMoviesThunk, searchLatestMovies } from "../../store/latestMoviesSlice";
-
-
+import { latestMoviesThunk } from "../../store/latestMoviesSlice";
 import RecommendedMovies from "../RecommendedMovies";
+import { SearchContext } from "../../context/context";
 
 const LatestMovies = () => {
 
    const dispatch = useDispatch();
 
-   const reduxLatestMovies = useSelector((state) => state.latestMovies?.filteredLatestMovies.length > 0 ? state.latestMovies?.filteredLatestMovies : state.latestMovies?.latestMovies);
+   const { searchText } = useContext(SearchContext);
 
-   console.log(reduxLatestMovies.length)
+   const reduxLatestMovies = useSelector((state) => state.latestMovies?.latestMovies);
 
-   useEffect(()=>{
+
+   useEffect(() => {
       dispatch(latestMoviesThunk())
-   },[dispatch]);
+   }, [dispatch]);
 
-     return(
-        <RecommendedMovies movies={reduxLatestMovies} />
-     )
+   const filteredLatestMoviesList = useMemo(() => {
+      return (reduxLatestMovies && reduxLatestMovies.filter((movie) => movie.title.toLowerCase().includes(searchText)))
+   }, [searchText, reduxLatestMovies]);
+
+   return (
+      <RecommendedMovies movies={searchText === "" ? reduxLatestMovies : filteredLatestMoviesList} />
+   )
 }
 
-export default LatestMovies
+export default LatestMovies;

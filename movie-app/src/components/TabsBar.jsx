@@ -11,7 +11,7 @@ const TabsBar = () => {
                 className="bg-amber-400 text-center p-3">
                 Upcoming Movies
             </Link>
-            <Link to='/nearByEvents'
+            <Link to='/nearbyEvents'
                 className="bg-amber-400 text-center p-3">
                 NearBy Events
             </Link>

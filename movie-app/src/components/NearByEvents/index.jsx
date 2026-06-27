@@ -1,8 +1,7 @@
-
 const NearByEvents = () => {
 
     return(
-        <h1>NearBy Events</h1>
+        <h1 className="text-center text-2xl text-amber-300">NearBy Events</h1>
     )
 }
 
