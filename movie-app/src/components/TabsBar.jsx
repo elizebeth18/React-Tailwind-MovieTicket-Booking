@@ -7,7 +7,7 @@ const TabsBar = () => {
                 className="bg-amber-400 text-center  p-3">
                 Latest Movies
             </Link>
-            <Link to='/latestMovies'
+            <Link to='/upcomingMovies'
                 className="bg-amber-400 text-center p-3">
                 Upcoming Movies
             </Link>
