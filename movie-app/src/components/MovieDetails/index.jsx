@@ -8,6 +8,16 @@ const MovieDetails = () => {
 
   let movie = useSelector(state => state.movies?.moviesList.find(movie => movie.title === title));
 
+  const latestMovie = useSelector(state => state.latestMovies?.latestMovies.find(movie => movie.title === title));
+
+  const upComingMovie = useSelector(state => state.upcomingMovies?.upcomingMovies.find((movie) => movie.title === title));
+
+  if (Object.keys(latestMovie).length !== 0) {
+    movie = { ...latestMovie }
+  } else if (Object.keys(upComingMovie).length !== 0) {
+    movie = { ...upComingMovie }
+  }
+
   const navigate = useNavigate();
 
 

@@ -145,13 +145,13 @@
       "releaseDate": "2026-05-18",
       "image": "https://picsum.photos/300/450?random=1",
       "price": 350,
-      "showTimes": [
+      "showtimes": [
         "10:00 AM",
         "1:30 PM",
         "5:00 PM",
         "9:00 PM"
       ],
-      "description": "Ethan Hunt faces his most dangerous mission yet as a global AI threat puts the world's security at risk. He must race against time to stop a catastrophe before humanity loses control."
+      "plot": "Ethan Hunt faces his most dangerous mission yet as a global AI threat puts the world's security at risk. He must race against time to stop a catastrophe before humanity loses control."
     },
     {
       "id": "2",
@@ -166,13 +166,13 @@
       "releaseDate": "2026-06-10",
       "image": "https://picsum.photos/300/450?random=2",
       "price": 300,
-      "showTimes": [
+      "showtimes": [
         "11:00 AM",
         "2:30 PM",
         "6:00 PM",
         "10:00 PM"
       ],
-      "description": "Clark Kent struggles to balance his human life and Kryptonian heritage while protecting Earth from a powerful new enemy threatening global peace."
+      "plot": "Clark Kent struggles to balance his human life and Kryptonian heritage while protecting Earth from a powerful new enemy threatening global peace."
     },
     {
       "id": "3",
@@ -187,13 +187,13 @@
       "releaseDate": "2026-06-01",
       "image": "https://picsum.photos/300/450?random=3",
       "price": 250,
-      "showTimes": [
+      "showtimes": [
         "9:30 AM",
         "12:30 PM",
         "4:00 PM",
         "7:30 PM"
       ],
-      "description": "Hiccup and Toothless embark on a new journey where dragons and humans must unite against a mysterious force disrupting their world."
+      "plot": "Hiccup and Toothless embark on a new journey where dragons and humans must unite against a mysterious force disrupting their world."
     },
     {
       "id": "4",
@@ -208,13 +208,13 @@
       "releaseDate": "2026-06-05",
       "image": "https://picsum.photos/300/450?random=4",
       "price": 400,
-      "showTimes": [
+      "showtimes": [
         "10:30 AM",
         "2:00 PM",
         "5:30 PM",
         "8:30 PM"
       ],
-      "description": "A retired Formula One legend returns to mentor a talented young driver while confronting unfinished business from his racing past."
+      "plot": "A retired Formula One legend returns to mentor a talented young driver while confronting unfinished business from his racing past."
     }
   ],
   "upcomingMovies": [
@@ -229,13 +229,13 @@
       "releaseDate": "2026-12-18",
       "image": "https://picsum.photos/300/450?random=5",
       "price": 450,
-      "showTimes": [
+      "showtimes": [
         "11:00 AM",
         "3:00 PM",
         "6:30 PM",
         "10:00 PM"
       ],
-      "description": "Jake Sully and his family venture into unexplored regions of Pandora where new tribes, ecosystems, and threats challenge their future."
+      "plot": "Jake Sully and his family venture into unexplored regions of Pandora where new tribes, ecosystems, and threats challenge their future."
     },
     {
       "id": "6",
@@ -248,13 +248,13 @@
       "releaseDate": "2026-11-20",
       "image": "https://picsum.photos/300/450?random=6",
       "price": 380,
-      "showTimes": [
+      "showtimes": [
         "10:00 AM",
         "1:00 PM",
         "5:00 PM",
         "8:30 PM"
       ],
-      "description": "Peter Parker begins a fresh chapter in his life while mysterious events force him back into action as New York faces a dangerous new villain."
+      "plot": "Peter Parker begins a fresh chapter in his life while mysterious events force him back into action as New York faces a dangerous new villain."
     },
     {
       "id": "7",
@@ -267,13 +267,13 @@
       "releaseDate": "2026-12-23",
       "image": "https://picsum.photos/300/450?random=7",
       "price": 280,
-      "showTimes": [
+      "showtimes": [
         "9:00 AM",
         "12:00 PM",
         "3:00 PM",
         "7:00 PM"
       ],
-      "description": "Shrek, Donkey, and Fiona return for a hilarious adventure that sends them into unexpected lands filled with magical chaos."
+      "plot": "Shrek, Donkey, and Fiona return for a hilarious adventure that sends them into unexpected lands filled with magical chaos."
     },
     {
       "id": "8",
@@ -286,13 +286,13 @@
       "releaseDate": "2026-10-02",
       "image": "https://picsum.photos/300/450?random=8",
       "price": 420,
-      "showTimes": [
+      "showtimes": [
         "11:30 AM",
         "2:30 PM",
         "6:00 PM",
         "9:30 PM"
       ],
-      "description": "Batman investigates a deeper conspiracy in Gotham as new enemies emerge and challenge both his identity and his mission."
+      "plot": "Batman investigates a deeper conspiracy in Gotham as new enemies emerge and challenge both his identity and his mission."
     }
   ],
   "transactions": [
@@ -879,6 +879,50 @@
       "ticketCount": 1,
       "date": "2026-06-28",
       "totalPrice": 200
+    },
+    {
+      "id": "00ad",
+      "movieTitle": "Despicable Me 4",
+      "name": "ewe",
+      "email": "rwr@ffe.com",
+      "showtime": "18:45",
+      "seatType": "superior",
+      "ticketCount": 1,
+      "date": "2026-07-04",
+      "totalPrice": 300
+    },
+    {
+      "id": "71d9",
+      "movieTitle": "Avengers: Endgame",
+      "name": "feer",
+      "email": "feer@feer.com",
+      "showtime": "14:30",
+      "seatType": "superior",
+      "ticketCount": 1,
+      "date": "2026-06-28",
+      "totalPrice": 300
+    },
+    {
+      "id": "26be",
+      "movieTitle": "Despicable Me 4",
+      "name": "grerre",
+      "email": "greg@fdf.com",
+      "showtime": "15:30",
+      "seatType": "superior",
+      "ticketCount": 1,
+      "date": "2026-06-28",
+      "totalPrice": 300
+    },
+    {
+      "id": "86eb",
+      "movieTitle": "Interstellar",
+      "name": "dsddd",
+      "email": "sfsf@fds.com",
+      "showtime": "13:00",
+      "seatType": "sofa",
+      "ticketCount": 1,
+      "date": "2026-07-02",
+      "totalPrice": 600
     }
   ],
   "events": [
