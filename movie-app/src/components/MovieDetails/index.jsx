@@ -12,9 +12,9 @@ const MovieDetails = () => {
 
   const upComingMovie = useSelector(state => state.upcomingMovies?.upcomingMovies.find((movie) => movie.title === title));
 
-  if (Object.keys(latestMovie).length !== 0) {
+  if (latestMovie && Object.keys(latestMovie).length !== 0) {
     movie = { ...latestMovie }
-  } else if (Object.keys(upComingMovie).length !== 0) {
+  } else if (upComingMovie && Object.keys(upComingMovie).length !== 0) {
     movie = { ...upComingMovie }
   }
 
