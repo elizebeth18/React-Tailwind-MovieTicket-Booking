@@ -5,28 +5,19 @@ export const base_url = import.meta.env.VITE_API_URL;
 
 const initialState = {
     moviesList: [],
-    //selectedMovie: {},
-    filteredMoviesList: [],
     isLoading: false,
     error: null
 }
 
 export const fetchMovies = createAsyncThunk('movies/fetch', async() => {
     const response = await axios.get(`${base_url}/movies`);
-    
     return(response.data);
-
 });
 
 const moviesSlice = createSlice({
     name: 'getMovies',
     initialState,
-    reducers: {
-        searchMovies: (state, action) => {
-            state.filteredMoviesList = state.moviesList.filter((movie) => movie.title.trim().toLowerCase().includes(action.payload.trim()));
-            //console.log(state.filteredMoviesList);
-        }
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchMovies.pending,(state) => {
             state.isLoading = true;

@@ -20,7 +20,7 @@ const nearByEventsSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(nearByEventsThunk.pending, (state, action) => {
+        builder.addCase(nearByEventsThunk.pending, (state) => {
             state.isLoading = true;
             state.error = null;
         })

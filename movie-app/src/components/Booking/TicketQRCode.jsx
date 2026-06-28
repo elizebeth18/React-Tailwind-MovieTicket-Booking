@@ -14,9 +14,10 @@ const TicketQRCode = () => {
       "date": "2026-06-28",
       "totalPrice": 200
     }
-    //useSelector(state => state.bookMovieTicket.transaction);
+    
+    const bookedTicket = useSelector(state => state.bookMovieTicket?.transaction);
+    console.log(bookedTicket)
 
-    console.log(transaction)
     return(
         <>
             <h1 className="text-center text-2xl">Ticket QR Code</h1>

@@ -9,33 +9,49 @@ const initialState = {
     transaction: {}
 }
 
-export const bookMovieTicketThunk = createAsyncThunk('bookMovieTicket/post', async (data) => {
-    const response = await axios.post(`${base_url}/transactions`, JSON.stringify(data),{
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    });
+export const bookMovieTicketThunk = createAsyncThunk('bookMovieTicket/post', async (data, thunkAPI) => {
 
-    return response.data;
+    try {
+
+        const response = await axios.post(`${base_url}/transactions`, data, {
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(
+            error.response?.data ||
+            error.message
+        );
+    }
 });
 
 const bookMovieTicketSlice = createSlice({
     name: 'bookMovieTicket',
     initialState,
-    reducers:{},
-    extraReducers: (builder) =>{
+    reducers: {},
+    extraReducers: (builder) => {
+
         builder.addCase(bookMovieTicketThunk.pending, (state) => {
+            console.log("PENDING");
             state.loading = true;
             state.error = null;
-        }).addCase(bookMovieTicketThunk.fulfilled,(state, action) => {
+        });
+
+        builder.addCase(bookMovieTicketThunk.fulfilled, (state, action) => {
+            console.log("FULFILLED", action.payload);
             state.loading = false;
             console.log(action.payload)
-            state.transaction = action.payload;
-        }).addCase(bookMovieTicketThunk.rejected,(state, action) => {
+            state.transaction = { ...action.payload };
+        });
+
+        builder.addCase(bookMovieTicketThunk.rejected, (state, action) => {
+            console.log("REJECTED", action.error);
             state.loading = false;
-            state.error = action.error.message
-        })
+            state.error = action.error?.message
+        });
     }
 });
 

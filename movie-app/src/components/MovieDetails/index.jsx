@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const MovieDetails = () => {
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const title = searchParams.get('movieTitle')
 
   let movie = useSelector(state => state.movies?.moviesList.find(movie => movie.title === title));
@@ -19,7 +19,6 @@ const MovieDetails = () => {
   }
 
   const navigate = useNavigate();
-
 
   const bookTicketHandler = (id, title) => {
     navigate(`/ticketbooking/?id=${id}&title=${title}`)
@@ -95,10 +94,6 @@ const MovieDetails = () => {
 
                 {/* Bottom section */}
                 <div className="mt-8 flex justify-between items-center">
-
-                  {/* <h2 className="text-2xl font-bold">
-          ₹100
-        </h2> */}
 
                   <button
                     onClick={() => { bookTicketHandler(movie.id, movie.title) }}

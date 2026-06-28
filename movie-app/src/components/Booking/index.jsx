@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { bookMovieTicketThunk } from '../../store/bookMovieTicketSlice'
-import Alert from "./PopUp";
+//import Alert from "./PopUp";
 
 const TicketBookingForm = () => {
 
@@ -10,8 +10,19 @@ const TicketBookingForm = () => {
     const [searchParams] = useSearchParams();
     const movieTitle = searchParams.get('title');
 
+    
     const movieList = useSelector(state => state.movies?.moviesList)
-    const movie = movieList.find(movie => movie.title === movieTitle);
+    let movie = movieList.find(movie => movie.title === movieTitle);
+
+    const latestMovie = useSelector(state => state.latestMovies?.latestMovies.find(movie => movie.title === movieTitle));
+
+    const upComingMovie = useSelector(state => state.upcomingMovies?.upcomingMovies.find((movie) => movie.title === movieTitle));
+
+    if (latestMovie && Object.keys(latestMovie).length !== 0) {
+        movie = { ...latestMovie }
+    } else if (upComingMovie && Object.keys(upComingMovie).length !== 0) {
+        movie = { ...upComingMovie }
+    }
 
     const dispatch = useDispatch();
 
@@ -28,14 +39,6 @@ const TicketBookingForm = () => {
 
     const [errors, setErrors] = useState({});
     const [showPopup, setShowPopup] = useState(false);
-console.log("Component rendered");
-    useEffect(()=>{
-        console.log("Booking page mounted")
-
-        return () => {
-            console.log("Booking page unmounted")
-        }
-    },[]);
 
     const inputChangeHandler = (e) => {
 
@@ -46,8 +49,6 @@ console.log("Component rendered");
             [name]: value
         }));
     };
-
-
 
     const totalPrice = useMemo(() => {
 
@@ -89,7 +90,7 @@ console.log("Component rendered");
         }
 
         if (formData.date === "") {
-            newErrors.date ="Select date";
+            newErrors.date = "Select date";
         }
 
         setErrors(newErrors);
@@ -100,7 +101,7 @@ console.log("Component rendered");
 
     const submitFormHandler = async (e) => {
 
-        e.preventDefault();
+        //e.preventDefault();
 
         if (!validateForm()) {
             return;
@@ -113,15 +114,12 @@ console.log("Component rendered");
         };
 
         try {
-             alert("ticket booked successfully")
-            await dispatch(bookMovieTicketThunk(bookingDetails))
-
-            navigate("/ticketQRCode");
-
+            await dispatch(bookMovieTicketThunk(bookingDetails)).unwrap()
+            //alert("ticket booked successfully");
+            //navigate("/ticketQRCode");
         }
         catch (error) {
-
-            alert("Booking failed");
+            alert("Booking failed",error);
         }
 
     };
@@ -129,15 +127,13 @@ console.log("Component rendered");
 
     return (
         <>
-            {showPopup && (
-        <Alert
-            message="Ticket booked successfully 🎉"
-            onClose={() => setShowPopup(false)}
-        />
-    )}
-            <form
-                onSubmit={submitFormHandler}
-                className="max-w-md mx-auto p-6 my-5 bg-white rounded-lg">
+            {/* {showPopup && (
+                <Alert
+                    message="Ticket booked successfully 🎉"
+                    onClose={() => setShowPopup(false)}
+                />
+            )} */}
+            <div className="max-w-md mx-auto p-6 my-5 bg-white rounded-lg">
 
                 <h1 className="font-bold text-xl mb-5 text-center">
                     Book Movie Ticket</h1>
@@ -230,9 +226,11 @@ console.log("Component rendered");
                 </div>
 
                 <button className="bg-blue-500 text-white rounded w-full p-3"
-                    type="submit">Book Ticket</button>
+                    type="button" onClick={submitFormHandler}>
+                        Book Ticket
+                </button>
 
-            </form>
+            </div>
         </>
     )
 }
