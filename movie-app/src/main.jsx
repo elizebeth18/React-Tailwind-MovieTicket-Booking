@@ -16,37 +16,6 @@ import './index.css';
 
 
 const router =  createBrowserRouter([
-    {
-        path: '/',
-        element: <Home />,
-        errorElement: <Error />
-    },
-    /* {
-        path: '/latestMovies',
-        element: <LatestMovies />
-    },
-    {
-        path: '/upcomingMovies',
-        element: <UpcomingMovies />
-    },
-    {
-        path: '/nearbyEvents',
-        element: <NearByEvents />
-    },
-    {
-        path: '/movieDetails/:movieId',
-        element: <MovieDetails />
-    },
-    {
-        path: '/ticketbooking',
-        element: <TicketBookingForm />
-    },
-    {
-        path: '/ticketQRCode',
-        element: <TicketQRCode />
-    } */
-]);
-/* createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
@@ -82,7 +51,7 @@ const router =  createBrowserRouter([
       }
     ]
   }
-],); */
+],);
 
     store.subscribe(() => {
     console.log(

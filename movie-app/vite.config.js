@@ -8,4 +8,10 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  server: {
+    watch: {
+      // 👈 Ignore the specific mock database file or folder
+      ignored: ['**/db.json', '**/server/data/**'], 
+    },
+  }
 })

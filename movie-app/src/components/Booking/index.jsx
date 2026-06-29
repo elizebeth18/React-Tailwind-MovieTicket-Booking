@@ -115,8 +115,8 @@ const TicketBookingForm = () => {
 
         try {
             await dispatch(bookMovieTicketThunk(bookingDetails)).unwrap()
-            //alert("ticket booked successfully");
-            //navigate("/ticketQRCode");
+            alert("ticket booked successfully");
+            navigate("/ticketQRCode");
         }
         catch (error) {
             alert("Booking failed",error);
