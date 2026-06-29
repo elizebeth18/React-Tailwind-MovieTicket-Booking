@@ -7,49 +7,63 @@ const TicketQRCode = () => {
 
     return (
         <>
-            <h1 className="text-center text-2xl">Ticket QR Code</h1>
-            <div className="bg-white p-4 flex justify-center m-4 ">
-                <QRCode
-                    value={JSON.stringify(bookedTicket)}
-                    size={180}
-                />
+            <div className="bg-white max-w-md mx-auto my-6 rounded-lg shadow-lg p-5">
 
-                <div className="text-left m-2">
+                <h1 className="text-center text-2xl font-bold mb-5">
+                    Ticket QR Code
+                </h1>
 
-                    <p>
-                        Movie:
-                        {bookedTicket.movieTitle}
-                    </p>
+                <div className="flex flex-col md:flex-row items-center gap-6">
 
-                    <p>
-                        Name:
-                        {bookedTicket.name}
-                    </p>
+                    {/* QR Code */}
+                    <div className="bg-gray-100 p-4 rounded-lg">
+                        <QRCode
+                            value={JSON.stringify(bookedTicket)}
+                            size={180}
+                        />
+                    </div>
 
-                    <p>
-                        Show:
-                        {bookedTicket.date}
-                    </p>
+                    {/* Ticket Details */}
+                    <div className="space-y-2 text-sm w-full">
 
-                    <p>
-                        Show:
-                        {bookedTicket.showtime}
-                    </p>
-                    <p>
-                        Seat:
-                        {bookedTicket.seatType}
-                    </p>
+                        <p>
+                            <span className="font-semibold">Movie:</span>{" "}
+                            {bookedTicket.movieTitle}
+                        </p>
 
-                    <p>
-                        Tickets:
-                        {bookedTicket.ticketCount}
-                    </p>
+                        <p className="capitalize">
+                            <span className="font-semibold">Name:</span>{" "}
+                            {(bookedTicket.name)}
+                        </p>
 
-                    <p>
-                        Total:
-                        ₹{bookedTicket.totalPrice}
-                    </p>
+                        <p>
+                            <span className="font-semibold">Date:</span>{" "}
+                            {bookedTicket.date}
+                        </p>
+
+                        <p>
+                            <span className="font-semibold">Show Time:</span>{" "}
+                            {bookedTicket.showtime}
+                        </p>
+
+                        <p className="capitalize">
+                            <span className="font-semibold">Seat:</span>{" "}
+                            {bookedTicket.seatType}
+                        </p>
+
+                        <p>
+                            <span className="font-semibold">Tickets:</span>{" "}
+                            {bookedTicket.ticketCount}
+                        </p>
+
+                        <p className="text-lg font-bold">
+                            Total: ₹{bookedTicket.totalPrice}
+                        </p>
+
+                    </div>
+
                 </div>
+
             </div>
         </>
     )

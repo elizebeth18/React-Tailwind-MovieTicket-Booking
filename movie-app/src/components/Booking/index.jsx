@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { bookMovieTicketThunk } from '../../store/bookMovieTicketSlice'
-//import Alert from "./PopUp";
+import SuccessPop from './SuccessPop';
 
 const TicketBookingForm = () => {
 
@@ -10,7 +10,6 @@ const TicketBookingForm = () => {
     const [searchParams] = useSearchParams();
     const movieTitle = searchParams.get('title');
 
-    
     const movieList = useSelector(state => state.movies?.moviesList)
     let movie = movieList.find(movie => movie.title === movieTitle);
 
@@ -60,10 +59,7 @@ const TicketBookingForm = () => {
 
         return prices[formData.seatType] ? prices[formData.seatType] * Number(formData.ticketCount) : 0;
 
-    }, [
-        formData.seatType,
-        formData.ticketCount
-    ]);
+    }, [formData.seatType, formData.ticketCount]);
 
 
     const validateForm = () => {
@@ -99,9 +95,7 @@ const TicketBookingForm = () => {
     };
 
 
-    const submitFormHandler = async (e) => {
-
-        //e.preventDefault();
+    const submitFormHandler = async () => {
 
         if (!validateForm()) {
             return;
@@ -115,24 +109,21 @@ const TicketBookingForm = () => {
 
         try {
             await dispatch(bookMovieTicketThunk(bookingDetails)).unwrap()
-            alert("ticket booked successfully");
-            navigate("/ticketQRCode");
+            setShowPopup(true);
         }
         catch (error) {
-            alert("Booking failed",error);
+            alert("Booking failed", error);
         }
-
     };
 
+    const closeSuccessPopUp = () => {
+        setShowPopup(false);
+        navigate("/ticketQRCode");
+    }
 
     return (
         <>
-            {/* {showPopup && (
-                <Alert
-                    message="Ticket booked successfully 🎉"
-                    onClose={() => setShowPopup(false)}
-                />
-            )} */}
+            {showPopup && <SuccessPop close={closeSuccessPopUp} />}
             <div className="max-w-md mx-auto p-6 my-5 bg-white rounded-lg">
 
                 <h1 className="font-bold text-xl mb-5 text-center">
@@ -142,7 +133,7 @@ const TicketBookingForm = () => {
                     disabled className="w-full p-3 border mb-2 rounded"
                     value={movieTitle} />
 
-                <input name="name" className="w-full p-3 border mb-2 rounded"
+                <input name="name" className="capitalize w-full p-3 border mb-2 rounded"
                     value={formData.name} placeholder="Name"
                     onChange={inputChangeHandler}
                 />
@@ -227,7 +218,7 @@ const TicketBookingForm = () => {
 
                 <button className="bg-blue-500 text-white rounded w-full p-3"
                     type="button" onClick={submitFormHandler}>
-                        Book Ticket
+                    Book Ticket
                 </button>
 
             </div>
