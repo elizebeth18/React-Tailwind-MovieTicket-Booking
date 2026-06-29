@@ -33,7 +33,7 @@ const NavBar = () => {
                     <div className="flex items-center gap-8">
                         {location.pathname !== "/" && (
                             <button
-                                onClick={() => navigate(-1)}
+                                onClick={() => navigate('/')}
                                 className="p-2 rounded-full hover:bg-slate-700 transition"
                                 aria-label="Go back"
                             >

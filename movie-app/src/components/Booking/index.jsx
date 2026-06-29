@@ -25,7 +25,13 @@ const TicketBookingForm = () => {
 
     const dispatch = useDispatch();
 
-    const today = new Date().toISOString().split("T")[0];
+    let today = new Date().toISOString().split("T")[0];
+    let date = new Date()
+    let releaseDate = new Date(movie.releaseDate);
+
+    if(upComingMovie && releaseDate > date) {
+        today = new Date(movie.releaseDate).toISOString().split('T')[0];
+    }
 
     const [formData, setFormData] = useState({
         name: "",
