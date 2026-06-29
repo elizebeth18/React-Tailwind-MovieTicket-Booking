@@ -1,12 +1,14 @@
 import { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { SearchContext } from '../context/context';
+import { ArrowLeft } from "lucide-react"; 
 
 const NavBar = () => {
 
     const location = useLocation();
-
-    const {searchText, setSearchText } =  useContext(SearchContext);
+    const navigate = useNavigate();
+    
+    const { searchText, setSearchText } = useContext(SearchContext);
 
     let pageName = location.pathname.split('/')[1];
 
@@ -29,9 +31,18 @@ const NavBar = () => {
                     px-1 py-1 flex items-center
                     justify-between">
                     <div className="flex items-center gap-8">
+                        {location.pathname !== "/" && (
+                            <button
+                                onClick={() => navigate(-1)}
+                                className="p-2 rounded-full hover:bg-slate-700 transition"
+                                aria-label="Go back"
+                            >
+                                <ArrowLeft className="w-5 h-5" />
+                            </button>
+                        )}
                         <Link to='/'
                             className="text-lg font-bold">
-                                Movie App
+                            Movie App
                         </Link>
                     </div>
 
