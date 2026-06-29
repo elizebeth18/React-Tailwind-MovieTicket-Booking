@@ -3,6 +3,7 @@ import fetchMoviesReducer from './movieSlice';
 import latestMoviesReducer from './latestMoviesSlice';
 import upcomingMoviesReducer from './upcomingMoviesSlice';
 import bookMovieTicketReducer from './bookMovieTicketSlice';
+import nearByEventsReducer from './nearByEventsSlice';
 
 const logger = store => next => action => {
 
@@ -27,6 +28,7 @@ const store  = configureStore({
         latestMovies: latestMoviesReducer,
         upcomingMovies: upcomingMoviesReducer,
         bookMovieTicket: bookMovieTicketReducer,
+        nearByEvents: nearByEventsReducer,
     },
     middleware:
         getDefaultMiddleware =>
