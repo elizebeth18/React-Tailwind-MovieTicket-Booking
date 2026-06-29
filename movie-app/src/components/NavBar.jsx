@@ -1,26 +1,21 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { SearchContext } from '../context/context';
 
 const NavBar = () => {
 
-    const [toggleSearch, setToggleSearch] = useState(true);
     const location = useLocation();
 
     const {searchText, setSearchText } =  useContext(SearchContext);
 
     let pageName = location.pathname.split('/')[1];
 
-    useEffect(()=>{
-        if(pageName === 'movieDetails' || 
-            pageName === 'nearbyEvents'||
-            pageName === 'ticketQRCode'||
-            pageName === 'ticketbooking'){
-            setToggleSearch(false)
-        }else{
-            setToggleSearch(true)
-        }
-    },[location]);
+    const hideSearch = [
+        "movieDetails",
+        "nearbyEvents",
+        "ticketQRCode",
+        "ticketbooking"
+    ].includes(pageName);
 
     const searchTextHandler = (event) => {
         let searchText = event.target.value.toLowerCase().trim();
@@ -40,7 +35,7 @@ const NavBar = () => {
                         </Link>
                     </div>
 
-                    {toggleSearch && <input
+                    {!hideSearch && <input
                         type="text"
                         value={searchText}
                         placeholder="Search Movies..."

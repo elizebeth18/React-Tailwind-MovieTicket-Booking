@@ -58,7 +58,7 @@ const TicketBookingForm = () => {
             sofa: 600
         };
 
-        return prices[formData.seatType] ? prices[formData.seatType] * formData.ticketCount : 0;
+        return prices[formData.seatType] ? prices[formData.seatType] * Number(formData.ticketCount) : 0;
 
     }, [
         formData.seatType,
@@ -166,7 +166,7 @@ const TicketBookingForm = () => {
                     onChange={inputChangeHandler}
                     className="w-full p-3 border mb-2 rounded" >
                     <option value="">Select Show Time</option>
-                    {movie?.showtimes.map(showtime => (
+                    {movie?.showtimes?.map(showtime => (
                         <option
                             key={showtime}
                             value={showtime}

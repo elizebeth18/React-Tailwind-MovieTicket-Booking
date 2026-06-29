@@ -11,11 +11,42 @@ import MovieDetails from './components/MovieDetails';
 import TicketBookingForm from './components/Booking';
 import TicketQRCode from './components/Booking/TicketQRCode';
 import UpcomingMovies from './components/UpcomingMovies';
-import './index.css';
 import { SearchProvider } from './context/context.jsx';
+import './index.css';
 
 
-const router = createBrowserRouter([
+const router =  createBrowserRouter([
+    {
+        path: '/',
+        element: <Home />,
+        errorElement: <Error />
+    },
+    /* {
+        path: '/latestMovies',
+        element: <LatestMovies />
+    },
+    {
+        path: '/upcomingMovies',
+        element: <UpcomingMovies />
+    },
+    {
+        path: '/nearbyEvents',
+        element: <NearByEvents />
+    },
+    {
+        path: '/movieDetails/:movieId',
+        element: <MovieDetails />
+    },
+    {
+        path: '/ticketbooking',
+        element: <TicketBookingForm />
+    },
+    {
+        path: '/ticketQRCode',
+        element: <TicketQRCode />
+    } */
+]);
+/* createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
@@ -26,36 +57,32 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: '/latestMovies',
+        path: 'latestMovies',
         element: <LatestMovies />
       },
       {
-        path: '/upcomingMovies',
+        path: 'upcomingMovies',
         element: <UpcomingMovies />
       },
       {
-        path: '/nearbyEvents',
+        path: 'nearbyEvents',
         element: <NearByEvents />
       },
       {
-        path: '/movieDetails/:movieId',
+        path: 'movieDetails/:movieId',
         element: <MovieDetails />
       },
       {
-        path: '/ticketbooking',
+        path: 'ticketbooking',
         element: <TicketBookingForm />
       },
       {
-        path: '/ticketQRCode',
+        path: 'ticketQRCode',
         element: <TicketQRCode />
       }
     ]
   }
-], {
-    future: {
-      v7_startTransition: true,
-      // Include other v7 flags you are preparing for here!
-    }},);
+],); */
 
     store.subscribe(() => {
     console.log(

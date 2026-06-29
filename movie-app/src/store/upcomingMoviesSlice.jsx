@@ -20,9 +20,8 @@ const upcomingMoviesSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(upComingMoviesThunk.pending, (state, action) => {
+        builder.addCase(upComingMoviesThunk.pending, (state) => {
             state.isLoading = true;
-            state.error = null;
         })
         .addCase(upComingMoviesThunk.fulfilled, (state, action) => {
             state.isLoading = false;

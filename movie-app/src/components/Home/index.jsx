@@ -1,12 +1,13 @@
 import { useEffect, useContext, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from "../../store/movieSlice";
-import { bookMovieTicketThunk } from "../../store/bookMovieTicketSlice";
 
 import TabsBar from "../TabsBar";
 import MovieSlider from "../MoviesSlider";
 import RecommendedMovies from "../RecommendedMovies";
 import { SearchContext } from "../../context/context";
+
+import { bookMovieTicketThunk } from "../../store/bookMovieTicketSlice";
 
 const Home = () => {
 
@@ -15,28 +16,6 @@ const Home = () => {
   let redux_moviesList = useSelector((state) => state.movies?.moviesList);
 
   const dispatch = useDispatch();
-
-  /* const ticket = {
-      "id": "3e5c",
-      "movieId": "4",
-      "movieTitle": "Interstellar",
-      "name": "ewrew",
-      "email": "sads@dsfd.com",
-      "showtime": "17:30",
-      "seatType": "superior",
-      "date": "2026-07-10",
-      "ticketCount": 1,
-      "totalPrice": 300
-    }
-
-    const submitTicket = async(ticket) => {
-      try{
-        
-        await dispatch(bookMovieTicketThunk(ticket)).unwrap()
-      }catch(err){
-        console.log(err)
-      }
-    }; */
 
   useEffect(() => {
     dispatch(fetchMovies());
@@ -47,12 +26,46 @@ const Home = () => {
     return (redux_moviesList && redux_moviesList.filter((movie) => movie.title.toLowerCase().includes(searchText)));
   }, [searchText, redux_moviesList]);
 
+  
+      const submitFormHandler = async () => {
+  
+          
+  
+          const bookingDetails = {
+      "id": "ff93",
+      "movieTitle": "Superman",
+      "name": "ssd",
+      "email": "sdsf@dsfd.scom",
+      "showtime": "11:00 AM",
+      "seatType": "normal",
+      "ticketCount": 1,
+      "date": "2026-06-28",
+      "totalPrice": 200
+    };
+  
+          try {
+              await dispatch(bookMovieTicketThunk(bookingDetails)).unwrap()
+          }
+          catch (error) {
+              alert("Booking failed",error);
+          }
+  
+      };
 
   return (
     <>
-      <TabsBar />
-      <MovieSlider movies={redux_moviesList} />
-      <RecommendedMovies movies={searchText === "" ? redux_moviesList : filteredList} />
+      {/* <TabsBar /> */}
+
+      <button className="flex justify-center text-center bg-cyan-500"
+        onClick={() => {
+          submitFormHandler()
+      }}>
+        Book Ticket
+      </button>
+
+
+      {/* <MovieSlider movies={redux_moviesList} />
+      <RecommendedMovies movies={searchText === "" ? redux_moviesList : filteredList} /> */}
     </>
   )
 }
