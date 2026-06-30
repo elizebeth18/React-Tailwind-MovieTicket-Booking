@@ -11,6 +11,7 @@ import MovieDetails from './components/MovieDetails';
 import TicketBookingForm from './components/Booking';
 import TicketQRCode from './components/Booking/TicketQRCode';
 import UpcomingMovies from './components/UpcomingMovies';
+import Profile from './components/Profile/index.jsx';
 import { SearchProvider } from './context/context.jsx';
 import './index.css';
 
@@ -48,7 +49,11 @@ const router =  createBrowserRouter([
       {
         path: 'ticketQRCode',
         element: <TicketQRCode />
-      }
+      },
+      {
+        path:'profile',
+        element: <Profile />
+      },
     ]
   }
 ],);
